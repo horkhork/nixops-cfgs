@@ -58,21 +58,14 @@ in
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  # };
-
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
   
-  #services.mullvad-vpn.enable = true;
-
   # List services that you want to enable:
+
+  #services.mullvad-vpn.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -81,19 +74,9 @@ in
     passwordAuthentication = false;
   };
 
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   programs.vim.defaultEditor = true;
 
@@ -131,12 +114,6 @@ in
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   home-manager.users.me = {
     home.packages = [
@@ -244,21 +221,10 @@ in
         };
       };
 
-      #tmux = {
-      #  enable = true;
-      #  extraConfig = ''
-      #    set -g default-shell /home/ssosik/.nix-profile/bin/zsh
-      #    set -g default-terminal "xterm-256color"
-      #    #set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
-      #    set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
-      #    set -g update-environment "SSH_AUTH_SOCK"
-      #  '';
-      #  keyMode = "vi";
-      #};
-
       vim = {
         enable = true;
-        extraConfig = builtins.readFile "dot.vimrc";
+	extraConfig = builtins.readFile "/home/me/nixops-cfgs/scrappy/dot.vimrc";
+	#extraConfig = builtins.readFile "scrappy/dot.vimrc";
         settings = {
            relativenumber = true;
            number = true;
@@ -353,7 +319,7 @@ in
 
     }; # End programs
 
-    home.file.".p10k.zsh".text = builtins.readFile "dot.p10k.zsh";
+    home.file.".p10k.zsh".text = builtins.readFile "/home/me/nixops-cfgs/scrappy/dot.p10k.zsh";
 
   };
 
