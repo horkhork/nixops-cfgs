@@ -131,7 +131,7 @@ in
       pkgs.unzip
       pkgs.wget
       pkgs.zsh-powerlevel10k
-      pkgs.nerdfonts
+      #pkgs.nerdfonts
       pkgs.terraform
       pkgs.vault
     ];
