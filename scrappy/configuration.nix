@@ -10,7 +10,7 @@ let
     rev = "91bd34620d73340be03642279ee0d1c64110ee6c";
     ref = "release-20.09";
   };
-  
+
   nixConfigs = builtins.fetchGit {
     url = "https://github.com/horkhork/nixops-cfgs.git";
     ref = "dev";

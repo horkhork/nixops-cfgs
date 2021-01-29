@@ -118,7 +118,7 @@ in
 
       vim = {
         enable = true;
-        extraConfig = builtins.readFile (nixConfigs + "/${config.networking.hostName}/dot.vimrc");
+        extraConfig = builtins.readFile (nixConfigs + "/common/dot.vimrc");
         settings = {
            relativenumber = true;
            number = true;
@@ -162,13 +162,7 @@ in
 
       tmux = {
         enable = true;
-        extraConfig = ''
-          set -g default-shell /home/me/.nix-profile/bin/zsh
-          set -g default-terminal "xterm-256color"
-          #set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
-          set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
-          set -g update-environment "SSH_AUTH_SOCK"
-        '';
+        extraConfig = builtins.readFile (nixConfigs + "/common/dot.tmux.conf");
         keyMode = "vi";
   }    ;
 
@@ -185,7 +179,7 @@ in
         };
         oh-my-zsh = {
           enable = true;
-          plugins = [ "git" "history" "taskwarrior" "virtualenv" ]; # "zsh-autosuggestions" "tmux" "tmuxinator" "ssh-agent" 
+          plugins = [ "git" "history" "taskwarrior" "virtualenv" ]; # "zsh-autosuggestions" "tmux" "tmuxinator" "ssh-agent"
           theme = "zsh-powerlevel10k/powerlevel10k";
           custom = "${pkgs.zsh-powerlevel10k}/share/";
         };
@@ -193,7 +187,7 @@ in
 
     }; # End programs
 
-    home.file.".zshrc".text = builtins.readFile (nixConfigs + "/${config.networking.hostName}/dot.zshrc");
-    home.file.".p10k.zsh".text = builtins.readFile (nixConfigs + "/${config.networking.hostName}/dot.p10k.zsh");
+    home.file.".zshrc".text = builtins.readFile (nixConfigs + "/common/dot.zshrc");
+    home.file.".p10k.zsh".text = builtins.readFile (nixConfigs + "/common/dot.p10k.zsh");
 
   }
