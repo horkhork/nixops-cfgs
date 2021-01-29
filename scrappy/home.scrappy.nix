@@ -2,7 +2,7 @@
 
 let nixConfigs = builtins.fetchGit {
     url = "https://github.com/horkhork/nixops-cfgs.git";
-    rev = "HEAD";
+    rev = "b28e1af65ad42a01a78a8f231d50e6a3c6281b62";
     ref = "dev";
     #ref = "master";
   };
