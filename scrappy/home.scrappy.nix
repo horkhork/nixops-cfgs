@@ -1,4 +1,12 @@
 { pkgs, ... }:
+
+let nixConfigs = builtins.fetchGit {
+    url = "https://github.com/horkhork/nixops-cfgs.git";
+    ref = "dev";
+    #ref = "master";
+  };
+in
+
 {
     home.packages = [
       pkgs.asciidoc
@@ -12,6 +20,7 @@
       pkgs.nerdfonts
       pkgs.niv # https://github.com/nmattia/niv
       pkgs.pandoc
+      pkgs.pass
       pkgs.pv
       pkgs.python3
       pkgs.ripgrep
@@ -23,7 +32,7 @@
       pkgs.zsh-powerlevel10k
     ];
 
-    #services.lorri.enable = true; # https://github.com/target/lorri
+    services.lorri.enable = true; # https://github.com/target/lorri
 
     programs = {
       direnv = {
@@ -81,7 +90,7 @@
       # Let Home Manager install and manage itself.
       home-manager.enable = true;
 
-      #info.enable = true;
+      info.enable = true;
       jq.enable = true;
       lesspipe.enable = true;
 
@@ -90,10 +99,10 @@
       #};
       readline.enable = true;
 
-      #keychain = {
-      #  enable = true;
-      #  enableZshIntegration = true;
-      #};
+      keychain = {
+        enable = true;
+        enableZshIntegration = true;
+      };
 
       taskwarrior = {
         enable = true;
@@ -109,7 +118,7 @@
 
       vim = {
         enable = true;
-	extraConfig = builtins.readFile "/home/me/nixops-cfgs/scrappy/dot.vimrc";
+        extraConfig = builtins.readFile (nixConfigs + "/scrappy/dot.vimrc");
         settings = {
            relativenumber = true;
            number = true;
@@ -184,7 +193,7 @@
 
     }; # End programs
 
-    home.file.".p10k.zsh".text = builtins.readFile "/home/me/nixops-cfgs/scrappy/dot.p10k.zsh";
-    home.file.".zshrc".text = builtins.readFile "/home/me/nixops-cfgs/scrappy/dot.zshrc";
+    home.file.".zshrc".text = builtins.readFile (nixConfigs + "/scrappy/dot.zshrc");
+    home.file.".p10k.zsh".text = builtins.readFile (nixConfigs + "/scrappy/dot.p10k.zsh");
 
   }
