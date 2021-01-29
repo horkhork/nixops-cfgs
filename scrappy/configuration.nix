@@ -10,6 +10,13 @@ let
     rev = "91bd34620d73340be03642279ee0d1c64110ee6c";
     ref = "release-20.09";
   };
+  
+  nixConfigs = builtins.fetchGit {
+    url = "https://github.com/horkhork/nixops-cfgs.git";
+    ref = "dev";
+    #ref = "master";
+  };
+
 in
 
 {
@@ -118,6 +125,6 @@ in
     openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8E/PbfpTIDPLYl6+KbfauImwcDRQp4t7azgOjzRckwKHZ0AzfJUKVs7lqTaUFbim0IK83fC9AFAW0Y/sUf5SOu2As5UNxLW4/9ol8tXECOkrgZQK7dVLuCEiVFX2/nf4Rds0XBC1DdpPwJAy909/eXnjUKCR/1QKya3KsNQn9ZPvypZ/mdhxpJZ36DCasExU56tVF3xFfyFX+rIukWRKVOWjB6crEyDR8rv1MR22IhpRhZmq35sjDIn03ZYJ4KzDT6dLPrNolKh+Ys8uhcJKDHEIop3Id6WMU43kZgNiHmGN/0j4Xy1FpYro0EmuFcs4bf1/9k1/4ALAem+yhrr75 linode nix test" ];
   };
 
-  home-manager.users.me = import "/home/me/nixops-cfgs/scrappy/home.scrappy.nix" pkgs;
+  home-manager.users.me = import (nixConfigs + "/${config.networking.hostName}/home.${config.networking.hostName}.nix") pkgs ;
 }
 

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let nixConfigs = builtins.fetchGit {
     url = "https://github.com/horkhork/nixops-cfgs.git";
@@ -118,7 +118,7 @@ in
 
       vim = {
         enable = true;
-        extraConfig = builtins.readFile (nixConfigs + "/scrappy/dot.vimrc");
+        extraConfig = builtins.readFile (nixConfigs + "/${config.networking.hostName}/dot.vimrc");
         settings = {
            relativenumber = true;
            number = true;
@@ -193,7 +193,7 @@ in
 
     }; # End programs
 
-    home.file.".zshrc".text = builtins.readFile (nixConfigs + "/scrappy/dot.zshrc");
-    home.file.".p10k.zsh".text = builtins.readFile (nixConfigs + "/scrappy/dot.p10k.zsh");
+    home.file.".zshrc".text = builtins.readFile (nixConfigs + "/${config.networking.hostName}/dot.zshrc");
+    home.file.".p10k.zsh".text = builtins.readFile (nixConfigs + "/${config.networking.hostName}/dot.p10k.zsh");
 
   }
