@@ -74,7 +74,7 @@ in
       desktopManager.gnome3.enable = true;
     };
 
-    #services.mullvad-vpn.enable = true;
+    mullvad-vpn.enable = true;
 
     # Enable the OpenSSH daemon.
     openssh = {
