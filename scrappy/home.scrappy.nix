@@ -1,4 +1,11 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
+
+let nixConfigs = builtins.fetchGit {
+    url = "https://github.com/horkhork/nixops-cfgs.git";
+    ref = "master";
+  };
+in
+
 {
     home.packages = [
       pkgs.asciidoc
@@ -12,6 +19,7 @@
       pkgs.nerdfonts
       pkgs.niv # https://github.com/nmattia/niv
       pkgs.pandoc
+      pkgs.pass
       pkgs.pv
       pkgs.python3
       pkgs.ripgrep
@@ -23,7 +31,7 @@
       pkgs.zsh-powerlevel10k
     ];
 
-    #services.lorri.enable = true; # https://github.com/target/lorri
+    services.lorri.enable = true; # https://github.com/target/lorri
 
     programs = {
       direnv = {
@@ -36,10 +44,11 @@
         enableZshIntegration = true;
       };
 
+      #git = import (nixConfigs + "/common/git-little-fluffy.nix");
       git = {
         enable = true;
         userName = "Steve Sosik";
-        userEmail = "steve@little-fluffy.cloud";
+        userEmail = "gitter@little-fluffy.cloud";
         aliases = {
           lg = "log --graph --oneline --decorate --all";
           com = "commit -v";
@@ -81,7 +90,7 @@
       # Let Home Manager install and manage itself.
       home-manager.enable = true;
 
-      #info.enable = true;
+      info.enable = true;
       jq.enable = true;
       lesspipe.enable = true;
 
@@ -109,7 +118,7 @@
 
       vim = {
         enable = true;
-	extraConfig = builtins.readFile "/home/me/nixops-cfgs/scrappy/dot.vimrc";
+        extraConfig = builtins.readFile (nixConfigs + "/common/dot.vimrc");
         settings = {
            relativenumber = true;
            number = true;
@@ -151,6 +160,12 @@
         ];
       };
 
+      tmux = {
+        enable = true;
+        extraConfig = builtins.readFile (nixConfigs + "/common/dot.tmux.conf");
+        keyMode = "vi";
+  }    ;
+
       zsh = {
         enable = true;
         enableAutosuggestions = true;
@@ -164,7 +179,7 @@
         };
         oh-my-zsh = {
           enable = true;
-          plugins = [ "git" "history" "taskwarrior" "virtualenv" ]; # "zsh-autosuggestions" "tmux" "tmuxinator" "ssh-agent" 
+          plugins = [ "git" "history" "taskwarrior" "virtualenv" ]; # "zsh-autosuggestions" "tmux" "tmuxinator" "ssh-agent"
           theme = "zsh-powerlevel10k/powerlevel10k";
           custom = "${pkgs.zsh-powerlevel10k}/share/";
         };
@@ -172,7 +187,7 @@
 
     }; # End programs
 
-    home.file.".p10k.zsh".text = builtins.readFile "/home/me/nixops-cfgs/scrappy/dot.p10k.zsh";
-    home.file.".zshrc".text = builtins.readFile "/home/me/nixops-cfgs/scrappy/dot.zshrc";
+    home.file.".zshrc".text = builtins.readFile (nixConfigs + "/common/dot.zshrc");
+    home.file.".p10k.zsh".text = builtins.readFile (nixConfigs + "/common/dot.p10k.zsh");
 
   }
